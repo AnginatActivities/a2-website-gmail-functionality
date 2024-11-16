@@ -19,16 +19,16 @@ const transporter = nodemailer.createTransport({
 
 app.post("/send",(req,res)=>{
 
-    const {message} = req.body;
+    const {message,name,email} = req.body;
 
     const mailOptions = {
         from: process.env.USER,
         to: process.env.USER,
         subject: "A2 Website Visiter",
-        text: message
+        text: "name:"+name+"\n\nemail:"+email+"\n\nmessage:"+message
       };
 
-      if(!message)
+      if(!(message && name && email))
         return res.json({status:"Not Ok",message:"Message not sent",error:"Message is required"})
 
       
