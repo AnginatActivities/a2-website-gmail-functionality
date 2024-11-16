@@ -29,7 +29,7 @@ app.post("/send",(req,res)=>{
       };
 
       if(!(message && name && email))
-        return res.json({status:"Not Ok",message:"Message not sent",error:"Message is required"})
+        return res.json({status:"Not Ok",message:"Message not sent",error:"Name, Email, Message is required"})
 
       
       transporter.sendMail(mailOptions, (error, info) => {
