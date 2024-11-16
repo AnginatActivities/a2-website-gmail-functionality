@@ -1,13 +1,14 @@
 const nodemailer = require("nodemailer");
 const express = require("express");
+const bodyParser = require("body-parser");
 const cors = require("cors");
 const dotenv = require("dotenv");
 dotenv.config()
 
 const app = express()
-app.use(express.json())
+app.use(bodyParser.json())
 app.use(express.urlencoded({extended:true}))
-app.use(cors())
+app.use(cors({origin:"*"}))
 
 const transporter = nodemailer.createTransport({
     service: "gmail", // or your email provider
@@ -20,6 +21,7 @@ const transporter = nodemailer.createTransport({
 app.post("/send",(req,res)=>{
 
     const {message,name,email} = req.body;
+    console.log(req.body)
 
     const mailOptions = {
         from: process.env.USER,
@@ -27,6 +29,7 @@ app.post("/send",(req,res)=>{
         subject: "A2 Website Visiter",
         text: "name:"+name+"\n\nemail:"+email+"\n\nmessage:"+message
       };
+
 
       if(!(message && name && email))
         return res.json({status:"Not Ok",message:"Message not sent",error:"Name, Email, Message is required"})
